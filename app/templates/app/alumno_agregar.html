@@ -1,0 +1,52 @@
+{% extends "app/base.html" %}
+{% block body %}
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light ms-4 me-4 mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-list fa-lg"></i> Nuevo alumno
+            </div>
+            <div class="card-body">
+                <form action="{% url 'alumno_agregar' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" style="width: 30%" class="form-control" name="nombre" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" style="width: 30%" class="form-control" name="apellidos" required="required">
+                    </div>
+
+                    <div class="form-group">
+                            <label>Edad</label>
+                            <input type="number" style="width: 30%" class="form-control" name="edad" required="required">
+                    </div>
+                    <div class="form-group">
+                            <label>Correo</label>
+                            <input type="email" style="width: 30%" class="form-control"  name="correo"  required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>Número Documento</label>
+                        <input type="text" style="width: 30%" class="form-control" name="numDoc" required="required">
+                    </div>
+
+                    <div class="form-group">
+                            <label for="categoria">Estado</label><br>
+
+                            <select style="width: 30%" class="form-select" name="estado">
+                                    <option value="" disabled selected>Seleccione</option>
+                                    <option value="True">Activo</option>
+                                    <option value="False">Inactivo </option>
+                            </select>   
+                    </div>
+                    <div class="form-group mt-3 text-end">
+                            <a type="button" class="btn btn-secondary" href="{% url 'alumnos' %}">Cancelar</a>
+                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}      

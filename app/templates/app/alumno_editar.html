@@ -8,46 +8,43 @@
                 <i class="fa-solid fa-list fa-lg"></i> Editar alumno
             </div>
             <div class="card-body">
-                <form>
+                <form action="{% url 'alumno_editar' alumno.id %}" method="POST">
                     {% csrf_token %}
-                    <input type="hidden" id="producto_id" value="{{ alumno.id }}">
-                    
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" style="width: 30%" class="form-control" id="nombre" value="{{ alumno.nombre }}" required="required">
+                        <input type="text" style="width: 30%" class="form-control" name="nombre" value="{{ alumno.nombre }}" required="required">
                     </div>
                     <div class="form-group">
                         <label>Apellidos</label>
-                        <input type="text" style="width: 30%" class="form-control" id="apellidos" value="{{ alumno.apellidos }}" required="required">
+                        <input type="text" style="width: 30%" class="form-control" name="apellidos" value="{{ alumno.apellidos }}" required="required">
                     </div>
 
                     <div class="form-group">
                             <label>Edad</label>
-                            <input type="number" style="width: 30%" class="form-control" id="edad" value="{{ alumno.edad }}" required="required">
+                            <input type="number" style="width: 30%" class="form-control" name="edad" value="{{ alumno.edad }}" required="required">
+                    </div>
+                    <div class="form-group">
+                            <label>Correo</label>
+                            <input type="email" style="width: 30%" class="form-control"  name="correo" value="{{ alumno.correo }}" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>Número Documento</label>
+                        <input type="text" style="width: 30%" class="form-control" name="numDoc" value="{{ alumno.numDoc }}" required="required">
                     </div>
 
                     <div class="form-group">
-                            <label>Correo</label>
-                            <input type="email" style="width: 30%" class="form-control"  id="correo" value="{{ alumno.correo }}" required="required">
-                    </div>
+                            <label for="categoria">Estado</label><br>
 
-                    {% comment %} <div class="form-group">
-                            <label for="categoria">Categoria</label><br>
-
-                            <select style="width: 30%" class="custom-select" id="categoria">
-                                    <option>Productos categoria</option>
-                                    <option value="1" {% if producto.categoria == '1' %} selected {% endif %} >Bebidas</option>
-                                    <option value="2" {% if producto.categoria == '2' %} selected {% endif %} >Abarrotes </option>
-                                    <option value="3" {% if producto.categoria == '3' %} selected {% endif %} >Lacteos </option>
-                                    <option value="4" {% if producto.categoria == '4' %} selected {% endif %} >Limpieza </option>
+                            <select style="width: 30%" class="form-select" name="estado">
+                                    <option value="" disabled>Seleccione</option>
+                                    <option value="True" {% if alumno.estado %} selected {% endif %} >Activo</option>
+                                    <option value="False" {% if not alumno.estado %} selected {% endif %} >Inactivo </option>
                             </select>   
-                    </div> {% endcomment %}
-
+                    </div>
                     <div class="form-group mt-3 text-end">
                             <a type="button" class="btn btn-secondary" href="{% url 'alumnos' %}">Cancelar</a>
-                            <button type="button" id="update" class="btn btn-warning">Actualizar</button>
+                            <button type="submit" class="btn btn-warning">Actualizar</button>
                     </div>
-                    
                 </form>
             </div>
         </div>
