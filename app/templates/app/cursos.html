@@ -1,0 +1,88 @@
+{% extends "app/base.html" %}
+{% block body %}
+<h2 class="m-4">Lista de cursos</h2>
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary ms-4 me-4 mb-4" href="{% url 'curso_agregar' %}">Nuevo curso</a>
+        {% if cursos %}
+            <div class="card bg-light ms-4 me-4 mb-4">
+                <div class="card-header">
+                    <i class="fa-solid fa-list fa-lg"></i> Registro de cursos
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Fecha Inicio</th>
+                                    <th scope="col">Fecha Fin</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for curso in cursos %}
+                                    <tr>
+                                        <td>{{ curso.nombre }}</td>
+                                        <td>{{ curso.descripcion }}</td>
+                                        <td>{{ curso.fechaInicio }}</td>
+                                        <td>{{ curso.fechaFin }}</td>
+                                        <td>
+                                            {% if curso.estado %}
+                                                <span class="badge bg-success">Activo</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Inactivo</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning me-1" href="{% url 'curso_editar' curso.id %}">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+
+                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{curso.id}}">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+
+                                            <!-- Modal - eliminar curso -->
+                                            <div class="modal" id="delete{{curso.id}}" tabindex="-1" aria-labelledby="myModalLabel2" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            curso: {{ curso.nombre }}
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true"></span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>¿Estás seguro de que quieres eliminar a este curso?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form action="{% url 'curso_eliminar' curso.id %}" method="POST">
+                                                            {% csrf_token %}
+                                                            <input type="submit" class="btn btn-primary" value="Eliminar">
+                                                        </form>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+        <h5 class="alert alert-primary ms-4 me-4">No hay registro de cursos</h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

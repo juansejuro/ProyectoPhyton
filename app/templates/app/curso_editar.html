@@ -1,0 +1,48 @@
+{% extends "app/base.html" %}
+{% block body %}
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light ms-4 me-4 mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-list fa-lg"></i> Editar curso
+            </div>
+            <div class="card-body">
+                <form action="{% url 'curso_editar' curso.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" style="width: 30%" class="form-control" name="nombre" value="{{ curso.nombre }}" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <input type="text" style="width: 30%" class="form-control" name="descripcion" value="{{ curso.descripcion }}" required="required">
+                    </div>
+
+                    <div class="form-group">
+                            <label>Fecha Inicio</label>
+                            <input type="date" style="width: 30%" class="form-control" name="fechaInicio" value="{{ curso.fechaInicio }}" required="required">
+                    </div>
+                    <div class="form-group">
+                            <label>Fecha Fin</label>
+                            <input type="date" style="width: 30%" class="form-control"  name="fechaFin" value="{{ curso.fechaFin }}" required="required">
+                    </div>
+
+                    <div class="form-group">
+                            <label for="categoria">Estado</label><br>
+
+                            <select style="width: 30%" class="form-select" name="estado">
+                                    <option value="" disabled>Seleccione</option>
+                                    <option value="True" {% if curso.estado %} selected {% endif %} >Activo</option>
+                                    <option value="False" {% if not curso.estado %} selected {% endif %} >Inactivo </option>
+                            </select>   
+                    </div>
+                    <div class="form-group mt-3 text-end">
+                            <a type="button" class="btn btn-secondary" href="{% url 'cursos' %}">Cancelar</a>
+                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}      
